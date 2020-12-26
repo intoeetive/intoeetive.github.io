@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Stand-Alone Member Register</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="navlinks">
+<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
+<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
+<a href="http://www.intoeetive.com/index.php/comments/stand-alone-member-edit">Stand-Alone Member Edit</a>
+</div>
+
+
+<div id="content">
+
+	<h1>Stand-Alone Member Edit</h1>
+
+	<p>This module enables you to display profile editing form form within your EE templates. Using it, you can give any look to your profile editing, give it any URL address and use all power of EE tags.</p>
+    <p>Your users can edit all their profile info, including username, password, email and custom profile fields.</p>
+    <p>Note that with this module you can only edit profile of currently logged in user.</p>
+    <p class="important">You need to have Member module present on your system</p>
+
+	<ul>
+		
+        
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#usage">Usage</a></li>
+        <li><a href="#custom_fields">Auto-populate custom fields</a></li>
+        <li><a href="#Example">Example</a></li>
+        <li><a href="#categories">Editing member categories</a></li>        
+	</ul>
+
+	<h2><a name="installation"></a>Installation</h2>
+
+<p>For EE 1.x, place the directory contained in zip into your /system/modules directory. For EE 2.x, place it into your /system/expressionengine/third_party directory. Then go to 'Modules' section in your Control Panel and perform installation.
+</p>
+
+	<h2><a name="usage"></a>Usage</h2>
+
+<p><strong>{exp:sa_member_edit:form}</strong> is the only tag you need. Just wrap anything you want to be displayed in the form inside the tag pair.</p>
+<p>Following fields are available:<br />
+<strong>username</strong><br />
+<strong>screen_name</strong><br />
+<strong>password</strong><br />
+<strong>password_confirm</strong><br />
+<strong>email</strong><br />
+<strong>bday_y</strong><br />
+<strong>bday_m</strong><br />
+<strong>bday_d</strong><br />
+<strong>url</strong><br />
+<strong>location</strong><br />
+<strong>occupation</strong><br />
+<strong>interests</strong><br />
+<strong>aol_im</strong><br />
+<strong>icq</strong><br />
+<strong>yahoo_im</strong><br />
+<strong>msn_im</strong><br />
+<strong>bio</strong><br />
+<strong>current_password</strong><br />
+</p>
+<p>You can also include custom profile fields into your form using their database names (e.g. m_field_id_12) or with {custom_fields} tag pair.</p>
+<p>If you want to enable editing of screen_name, username, or email, your users will have to submit their password with the form (field should be named current_password). For password editing, they will also need to submit password confirmation (password_confirm).</p>
+<p><small>If you are using version <strong>prior to 2.1</strong> and want to enable editing of username or password, your users will have to submit their existing username (<strong>username</strong>), new username (<strong>new_username</strong>), existing password (<strong>password</strong>), new password (<strong>new_password</strong>) and new password confirmation (<strong>new_password_confirm</strong>) with the form.</small></p>
+<p>In order to change password, one needs to supply existing username with the form. If you do not want to let users change their usernames, provide username in hidden input field.</p>
+<p>Note that if you're submitting username (and for EE1, email) with the form - you are required to submit current_password, even if the actual username change does not happen. So the suggested practice is to separate username/password change from 'general' profile editing.</p>
+<p>If the user is not logged in, the module will return page with error message. To suppress it, specify parameter <strong>errors="off"</strong></p>
+<p>You can also specify to which page you want to redirect user after processing the form using <strong>return</strong> parameter.</p>
+
+	<h2><a name="custom_fields"></a>Displaying custom fields</h2>
+
+<p>If you want to add custom profile fields to your profile edit form, you can either add html manually (you should use 'technical' field names in this case, as they appear in database, e.g. m_field_id_12) or use <strong>{custom_fields}</strong> tag pair.</p>
+
+<p>Inside <strong>{custom_fields}</strong> tag are available following variables and conditionals:
+<ul>
+<li><strong>field_label</strong> - field label / readable name</li>
+<li><strong>field_description</strong> - field description</li>
+<li><strong>field_name</strong> - 'technical' field name, to be used with &lt;input&gt; tag</li>
+<li><strong>field_value</strong> - the value of profile field</li>
+<li><strong>width</strong> - field width</li>
+<li><strong>maxlength</strong> - field max length</li>
+<li><strong>rows</strong> - number fo of rows (for textarea)</li>
+<li><strong>options</strong> - pre-populated options list for drop-down inputs. The current value will be selected</li>
+<li><strong>if required</strong> - display text/html if the field is required</li>
+<li><strong>if text</strong> - display text/html if the field type is text input</li>
+<li><strong>if textarea</strong> - display text/html if the field type is textarea</li>
+<li><strong>if select</strong> - display text/html if the field type is dropdown select</li>
+</ul>
+</p>
+
+
+
+	<h2><a name="Example"></a>Example</h2>
+
+<code>
+{exp:sa_member_edit:form errors="off"}<br />
+<br />
+&lt;p&gt;Screen name: &lt;input type="text" name="screen_name" value="{screen_name}" /&gt;&lt;/p&gt;<br />
+<br />
+&lt;p&gt;Email: &lt;input type="text" name="email" value="{email}" /&gt;&lt;/p&gt;<br />
+<br />
+&lt;p&gt;URL: &lt;input type="text" name="url" value="{url}" /&gt;&lt;/p&gt;<br />
+<br />
+&lt;p&gt;Location: &lt;input type="text" name="location" value="{location}" /&gt;&lt;/p&gt;<br />
+<br />
+{custom_fields}<br />
+&lt;p&gt;{field_label}{if required}*{/if}:<br />
+{if text}<br />
+&lt;input type="text" name="{field_name}" width="{width}" maxlength="{maxlength}" value="{field_value}" /&gt;<br />
+{/if}<br />
+{if textarea}<br />
+&lt;textarea name="{field_name}" rows="{rows}"&gt;{field_value}&lt;/textarea&gt;<br />
+{/if}<br />
+{if select}<br />
+&lt;select name="{field_name}"&gt;{options}&lt;/select&gt;<br />
+{/if}<br />
+&lt;/p&gt;<br />
+{/custom_fields}<br />
+<br />
+&lt;p&gt;Current password: &lt;input type="text" name="current_password" /&gt;&lt;/p&gt;<br />
+<br />
+&lt;input type="submit" value="Save" /&gt;<br />
+<br />
+{/exp:sa_member_edit:form} 
+</code>
+
+<p>If you don't want to use {custom_fields} tag pair, then you should use the module in conjunction with {exp:member:custom_profile_data} tag.</p>
+
+<code>
+{exp:sa_member_edit:form errors="off"}<br />
+{exp:member:custom_profile_data}<br />
+&lt;input type="text" name="m_field_1" value="{my_field_name}" /&gt;<br />
+&lt;input type="submit" value="Save" /&gt;<br />
+<br />
+{exp:member:custom_profile_data}<br />
+{/exp:sa_member_edit:form} 
+</code>
+
+
+	<h2><a name="categories"></a>Editing member categories</h2>
+
+<p>If you have <a href="http://www.intoeetive.com/index.php/comments/member-categories">Member categories</a> module installed, you can use SA Member Edit to enable users editing their categories on the frontend.</p>
+<p>To do that, place <strong>{exp:sa_member_edit:categories_form}</strong> tag pair somewhere in your templates. The tag pair has only one variable &mdash; <strong>{categories}</strong>, which return pre-formatted list of categories checkboxes. If you want to edit the way categories are displayed, you need to edit categories.php file in views folder.</p>
+<code>
+My categories:<br />
+{exp:sa_member_edit:categories_form}<br />
+{categories}<br />
+&lt;input type="submit" value="Save" /&gt;<br />
+{/exp:sa_member_edit:categories_form}
+</code>
+
+<p>You can also use 'main' sa_member_edit form to edit categories. To do this, simply add <strong>{member_categories}</strong> variable wherever you want to display block of checkboxes.</p>
+
+</div>
+
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2011 Yuriy Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>

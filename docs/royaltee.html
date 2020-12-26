@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>RoyaltEE</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="navlinks">
+<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
+<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
+<a href="http://www.intoeetive.com/index.php/comments/royaltee">RoyaltEE</a>
+</div>
+
+
+<div id="content">
+
+	<h1>RoyaltEE</h1>
+
+	<p>If you ever wanted to pay commission/reward to authors/owners of items sold in your online store, RoyaltEE is the add-on the does just that! Define commissions rules on per-product basis and have the reward added instantly once orders are complete (using CartThrob or Store modules). Pay out using PayPal MassPay or manually.</p>
+	
+
+
+ 	<ul>		
+        
+        <li><a href="#general">General concepts</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#rules">Commission rules explained</a></li>
+        <li><a href="#balance">Balance and payouts</a>
+			<ul>
+            <li><a href="#balance-credits">Credits integration</a></li>
+            <li><a href="#balance-withdraw">Processing withdraws</a></li>             
+            </ul>
+		</li>
+		<li><a href="#stats">Stats</a></li>
+        <li><a href="#tags">Template tags</a>
+            <ul>
+            <li><a href="#tags-balance">Balance</a></li>   
+			<li><a href="#tags-stats">Stats</a></li>   
+			
+			<li><a href="#tags-payouts">Withdraw history</a></li>
+			<li><a href="#tags-withdraw">Request withdraw</a></li>          
+      
+            </ul>
+        </li>
+        
+	</ul>
+
+	<h2><a name="general" href="#top">&uarr;</a>General concepts</h2>
+
+<p>In order to get RoyaltEE working for your store's items authors/owners, you need to set to custom field or RoyaltEE type in your products channel. You can create up to 5 rules based on total amount of author's items sold (not total commission).</p>
+
+<p>Author of entry in products channel is the one who gets the reward.</p>
+
+<p>Once someone purchases an item with commission rule(s) set up, the reward is added to author's virtual balance. If you have DevDemon Credits module installed, it is also recorded as a credit (so the user can spend it on your site). The commissions can be requested to withdraw using integrated PayPal MassPay feature, or you can perform payouts on individual basis manually.</p>
+
+<p>The module works with 2 most popular e-comerce solutions for ExpressionEngine: CartThrob and Store.</p>
+
+	<h2><a name="settings" href="#top">&uarr;</a>Settings</h2>
+
+<p>Before proceeding, you need to save your settings. You will not be permitted to access rest of module's control panel before you do so.</p>
+<p>The main settings are:
+<br />
+E-commerce solution used on your site (CartThrob or Store)<br />
+Minimum amount to withdraw (requests for smaller amounts will not be accepted) - provide only number, without currency code<br />
+Integrate with DevDemon Credits module (if set, every commission will also be recorded and credit and can then be used using Credits gateway)<br />
+</p>
+<p>PayPal MassPay API credentials are only required if you indend to perform payouts automatically using MassPay.</p>
+
+	<h2><a name="rules" href="#top">&uarr;</a>Commission rules explained</h2>
+	
+<p><img src="royaltee_field.png" /></p>	
+
+<p>Above is shown the example of rules setup for product entry. Let's suppose the item costs $10. Then, the author will get from each sale:<br />
+$1 if the total revenue from ALL products by this author is less than $1,000
+$1,20 if the total revenue from ALL products by this author is between $1,000 and $5,000
+$1,30 if the total revenue from ALL products by this author is between $5,000 and $10,000
+$1,40 if the total revenue from ALL products by this author is between $10,000 and $25,000
+$1,50 if the total revenue from ALL products by this author is more than $25,000
+</p>
+
+<p>Note that 'total revenue' here refers to the amount that the store (not author) has received (taxes and shipping not counted)</p>
+
+
+	<h2><a name="balance" href="#top">&uarr;</a>Balance and payouts</h2>
+
+<h3><a name="balance-credits" href="#top">&uarr;</a>Credits integration</h3>
+
+<p>If you have DevDemon Credits installed, you can perform integration of the modules with simply marking the checkbox in settings.</p>
+<p>If you do so, every commission or payout record of RoyaltEE will be recorded as Credits action.</p>
+<p>The system will assume that 1 dollar (or the currency unit that you use for your store) is equal to 1 credit.</p>
+<p>With integration checkbox marked, the users will be able to spend their earned commission on your site instead of requesting payout (or in addition to that). Besides, they will not be able to request withdraw of amount greater than their Credits balance.</p>
+
+<h3><a name="balance-withdraw" href="#top">&uarr;</a>Processing withdraws</h3>
+
+<p>Once the total amount of commissions earned by member has reached the withdraw minimum you've set in settings (or anytime, if you left it empty) the user can request a payout/withdraw of funds.</p>
+<p>This is done with help of <a href="#tags-withdraw">withdraw_request_form</a> tag.</p>
+<p>Once the request has been submitted, the site admin receives notification to his email. The notification template can be edited in module's Control Panel, in Notification templates section.</p>
+<p>The variables available in <strong>email notification template</strong> are:<br />
+<em>{site_name}</em> &mdash; site name;<br />
+<em>{site_url}</em> &mdash; site URL;<br />
+<em>{amount}</em> &mdash; amount requested;<br />
+<em>{member_id}</em> &mdash; author member ID;<br />
+<em>{username}</em> &mdash; author username;<br />
+<em>{screen_name}</em> &mdash; author screen name;<br />
+<em>{cp_link}</em> &mdash; link to payouts section of module's control panel.
+</p>
+
+<p>The current and past withdaw requests can be found in Payouts section of module control panel.</p>
+<p>On that page, the admin can cancel the request or mark it as processed. When marking as processed, it is possible to record the method used for payout (PayPal, Bank transfer etc.), add corresponding Transaction ID and comment.</p>
+<p>It is also possible to process all pending automatically using PayPal MassPay. The number of pending requests should be greater than 2. If you have more than 250 requests pending, be aware that only 250 requests will be submitted to MassPay at a time. You will see a link to process requests with MassPay as s0on as there will be 3 or more pending requests.</p>
+
+	<h2><a name="stats" href="#top">&uarr;</a>Stats</h2>
+	
+<p>The Stats tab in module's Control Panel display author statistics for your system.</p>	
+<p>You can see the records for all commissions, including author name, link to product and order details.</p>
+<p>You can also narrow down results by certain author or display only selected period of time.</p>
+
+	<h2><a name="tags" href="#top">&uarr;</a>Template tags</h2>
+
+
+
+<h3><a name="tags-balance" href="#top">&uarr;</a>Balance</h3>
+
+<p><strong>{exp:royaltee:balance}</strong></p>
+
+<code>
+{exp:royaltee:balance} USD on your author's commissions balance
+</code>
+
+<p>Prints out user's current royalty balance: total amount earned minus amount withdrawn. If you have DevDemon Credits module installed the balance can't be greater than credits balance. </p>
+
+
+<h3><a name="tags-stats" href="#top">&uarr;</a>Stats</h3>
+
+<p><strong>{exp:royaltee:stats}</strong></p>
+
+<code>
+{exp:royaltee:stats limit="20" paginate="bottom"}<br />
+{if count==1}<br />
+&lt;p&gt;Total hits: {total_hits}&lt;/p&gt;<br />
+{/if}<br />
+{if total_commission_records>0}<br />
+&lt;p&gt;{count}. ${commission}, recorded on {record_date format="%Y-%m-%d"}&lt;/p&gt;<br />
+{/if}<br />
+{paginate}{pagination_links}{/paginate}<br />
+{/exp:royaltee:stats}<br />
+</code>
+
+
+<p>Displays detailed stats on commissions earned by logged in user.</p>
+
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>limit</dfn> &mdash; number of records per page, if you want to use pagination</li>
+<li><dfn>paginate</dfn> &mdash; place to display pagination links. Can be 'top', 'bottom' or 'both'. Defaults to 'bottom'</li>
+</ul>
+</p>
+
+<p><strong>Conditional variables:</strong>
+<ul>
+<li><dfn>{if no_results}{/if}</dfn> &mdash; displayed if there are no commissions recorded</li>
+
+</ul>
+</p>
+
+<p><strong>Variables:</strong>
+<ul>
+
+<li><dfn>total_commission_records</dfn> &mdash; total number of commissions recorded for user (matches the number of sold items)</li>
+
+<li><dfn>total_results</dfn> &mdash; total number of records on page</li>
+<li><dfn>count</dfn> &mdash; rows counter on each page</li>
+
+<li><dfn>balance</dfn> &mdash; the user's commission balance</li>
+<li><dfn>withdraw_minimum</dfn> &mdash; withdrawal minimum set in settings</li>
+
+<li><dfn>commission_id</dfn> &mdash; internal ID of commission record</li>
+<li><dfn>order_id</dfn> &mdash; ID of order/purchase that resulted in commission</li>
+<li><dfn>product_id</dfn> &mdash; ID of product sold</li>
+<li><dfn>product_title</dfn> &mdash; title of product sold</li>
+<li><dfn>method</dfn> &mdash; method representing either e-commerce solution used or withdraw</li>
+<li><dfn>credits</dfn> &mdash; amount added</li>
+<li><dfn>commission</dfn> &mdash; same as {credits}</li>
+<li><dfn>credits_pending</dfn> &mdash; amount scheduled for withdraw</li>
+<li><dfn>record_date format="%Y-%m-%d"</dfn> &mdash; the commission date. Standard EE date formatting rules apply.</li>
+
+<li><dfn>{paginate}{pagination_links}{/paginate}</dfn> &mdash; pagination links (if you have limit parameter set and there's more than one page)</li>
+</ul>
+</p>    
+
+
+
+<h3><a name="tags-payouts" href="#top">&uarr;</a>Withdraw history</h3>
+
+<p><strong>{exp:royaltee:withdraw_history}</strong></p>
+
+<code>
+{exp:royaltee:withdraw_history limit="20" paginate="bottom"}<br />
+&lt;p&gt;{count}. ${if amount}{amount}{if:else}{amount_pending}{/if}, requested on {request_date format="%Y-%m-%d"} and {status}{if status=='Processed'} on {payment_date format="%Y-%m-%d"}{/if}&lt;/p&gt;<br />
+{paginate}{pagination_links}{/paginate}<br />
+{/exp:royaltee:withdraw_history}<br />
+</code>
+
+
+<p>Displays history of RoyaltEE payouts to logged in user.</p>
+
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>limit</dfn> &mdash; number of records per page, if you want to use pagination</li>
+<li><dfn>paginate</dfn> &mdash; place to display pagination links. Can be 'top', 'bottom' or 'both'. Defaults to 'bottom'</li>
+</ul>
+</p>
+
+<p><strong>Conditional variables:</strong>
+<ul>
+<li><dfn>{if no_results}{/if}</dfn> &mdash; displayed if there are no commissions recorded</li>
+
+</ul>
+</p>
+
+<p><strong>Variables:</strong>
+<ul>
+
+<li><dfn>total_withdraw_records</dfn> &mdash; total number of withdraw records</li>
+
+<li><dfn>total_results</dfn> &mdash; total number of records on page</li>
+<li><dfn>count</dfn> &mdash; message counter on each page</li>
+
+<li><dfn>balance</dfn> &mdash; the user's current commission balance</li>
+<li><dfn>withdraw_minimum</dfn> &mdash; withdrawal minimum set in settings</li>
+
+<li><dfn>payout_id</dfn> &mdash; internal ID of payout record</li>
+<li><dfn>status</dfn> &mdash; Processed, Pending or Cancelled</li>
+<li><dfn>method</dfn> &mdash; withdraw method used (PayPal, Bank etc.)</li>
+<li><dfn>amount</dfn> &mdash; amount paid</li>
+<li><dfn>amount_pending</dfn> &mdash; requested amount, if withdraw is pending or cancelled</li>
+<li><dfn>transaction_id</dfn> &mdash; system (e.g. PayPal) transaction ID</li>
+<li><dfn>comment</dfn> &mdash; comment added to transaction by admin</li>
+<li><dfn>request_date format="%Y-%m-%d"</dfn> &mdash; date when withdraw was requested. Standard EE date formatting rules apply.</li>
+<li><dfn>payment_date format="%Y-%m-%d"</dfn> &mdash; date when payment was made. Standard EE date formatting rules apply.</li>
+
+<li><dfn>{paginate}{pagination_links}{/paginate}</dfn> &mdash; pagination links (if you have limit parameter set and there's more than one page)</li>
+</ul>
+</p>    
+
+
+
+<h3><a name="tags-withdraw" href="#top">&uarr;</a>Request withdraw</h3>
+
+<p><strong>{exp:royaltee:withdraw_request_form}</strong></p>
+
+
+<code>
+{exp:royaltee:withdraw_request_form return="SAME_PAGE"}<br />
+&lt;p&gt;Enter amount you widh to withdraw (${amount_min} or more). The total amount available is ${amount}&lt;/p&gt;<br />
+&lt;input type="text" name="amount" value="{amount}" /&gt;<br />
+&lt;input type="submit" value="Request payout" /&gt;<br />
+{/exp:royaltee:withdraw_request_form}<br />
+</code>
+
+<p><strong>Form fields</strong>:
+<ul>
+<li><dfn>amount</dfn> &mdash; the amount to withdraw. Mandatory</li>
+</ul>
+</p>
+
+<p><strong>Variables:</strong>
+<ul>
+<li><dfn>amount</dfn> &mdash; the total amount available on user's balance</li>
+<li><dfn>amount_min</dfn> &mdash; minimum payout amount as set in module's settings</li>
+</ul>
+</p>
+
+<p><strong>Parameters:</strong>
+<ul>
+<li><dfn>return</dfn> &mdash; a page to return after submitting request. Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><dfn>skip_success_message="yes"</dfn> &mdash; force redirect to return page without showing success message.</li>
+<li><dfn>id</dfn> &mdash; form ID (defaults to 'royaltee_form')</li>
+<li><dfn>class</dfn> &mdash; form class (defaults to 'royaltee_form')</li>
+<li><dfn>name</dfn> &mdash; form name (defaults to 'royaltee_form')</li>
+</ul>
+</p>
+
+
+
+
+</div>
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2014 Yuri Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>

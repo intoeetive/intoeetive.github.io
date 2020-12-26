@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Summit API wrapper</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="content">
+
+	<h1>Summit API wrapper</h1>
+    
+   	<ul>
+		
+        
+        <li><a href="#login">Login</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#password_reset">Reset password</a></li>
+        <li><a href="#edit">Edit ptofile</a></li>
+        <li><a href="#profile">View profile</a></li>
+	</ul>
+
+	<h2><a name="login"></a>General concept</h2>
+    
+<p>Log the user in. If the match between user stored in EE database and Summit user is not set, trying to find the match by email. If no results found in EE DB, creates new user out of Summit record.</p>    
+    
+<code>
+{if logged_in}<br />
+You are already logged in as {screen_name} ({username})<br />
+{/if}<br />
+{exp:summitapi:login return="SAME_PAGE"}<br />
+&lt;p&gt;Login/email: &lt;input type="text" name="email" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;Password: &lt;input type="password" name="password" /&gt;&lt;/p&gt;<br />
+&lt;input type="submit" /&gt;<br />
+{/exp:summitapi:login}
+</code>
+
+<p>Parameters:</p>
+<ul>
+<li><strong>return</strong> &mdash; a page to return after action (either successful or failed). Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><strong>id</strong> &mdash; form ID.</li>
+<li><strong>class</strong> &mdash; form CSS class.</li>
+<li><strong>name</strong> &mdash; form name.</li>
+<li><strong>ajax="yes"</strong> &mdash; "ajax" mode. Return success/error messages unformatted.</li>
+</ul>
+    
+    
+<p>Form fields:</p>
+<ul>
+<li><strong>email</strong> &mdash; user email</li>
+<li><strong>password</strong> &mdash; user password</li>
+<li><strong>anon</strong> &mdash; 'Do not show me in "who's online" list' checkbox. The value should be "1".</li>
+<li><strong>auto_login</strong> &mdash; 'Auto-login on future visits' checkbox. The value should be "1".</li>
+</ul>    
+    
+	<h2><a name="register"></a>Register</h2>
+    
+<p>Registration form. If registration was successful, the user is logged in.</p>    
+    
+<code>
+{exp:summitapi:register return="SAME_PAGE"}<br />
+&lt;p&gt;Login/email: &lt;input type="text" name="email" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;Password: &lt;input type="password" name="password" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;First name: &lt;input type="text" name="first_name" /&gt;&lt;/p&gt;<br />
+&lt;input type="submit" /&gt;<br />
+{/exp:summitapi:register}
+</code>
+
+<p>Parameters:</p>
+<ul>
+<li><strong>return</strong> &mdash; a page to return after action (either successful or failed). Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><strong>id</strong> &mdash; form ID.</li>
+<li><strong>class</strong> &mdash; form CSS class.</li>
+<li><strong>name</strong> &mdash; form name.</li>
+<li><strong>ajax="yes"</strong> &mdash; "ajax" mode. Return success/error messages unformatted.</li>
+</ul>
+    
+    
+<p>Form fields:</p>
+<ul>
+<li><strong>email</strong> &mdash; user email (mandatory)</li>
+<li><strong>password</strong> &mdash; user password (mandatory)</li>
+<li><strong>first_name</strong></li>
+<li><strong>last_name</strong></li>
+<li><strong>description</strong></li>
+<li><strong>twitter_handle</strong></li>
+<li><strong>company_name</strong></li>
+<li><strong>address</strong></li>
+<li><strong>job_title</strong></li>
+<li><strong>phone_number</strong></li>
+<li><strong>city</strong></li>
+<li><strong>country</strong></li>
+<li><strong>gender</strong></li>
+<li><strong>interests</strong></li>
+<li><strong>functional_area</strong></li>
+<li><strong>functional_titles</strong></li>
+<li><strong>industry</strong></li>
+</ul> 
+
+
+	<h2><a name="password_reset"></a>Reset password</h2>
+    
+
+<code>
+{exp:summitapi:password_reset return="SAME_PAGE"}<br />
+&lt;p&gt;Login/email: &lt;input type="text" name="email" /&gt;&lt;/p&gt;<br />
+&lt;input type="submit" /&gt;<br />
+{/exp:summitapi:password_reset}
+</code>
+
+<p>Parameters:</p>
+<ul>
+<li><strong>return</strong> &mdash; a page to return after action (either successful or failed). Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><strong>id</strong> &mdash; form ID.</li>
+<li><strong>class</strong> &mdash; form CSS class.</li>
+<li><strong>name</strong> &mdash; form name.</li>
+<li><strong>ajax="yes"</strong> &mdash; "ajax" mode. Return success/error messages unformatted.</li>
+</ul>
+    
+    
+<p>Form fields:</p>
+<ul>
+<li><strong>email</strong> &mdash; user email</li>
+</ul>    
+
+
+
+
+
+
+
+
+	<h2><a name="edit"></a>Edit profile</h2>
+     
+    
+<code>
+{exp:summitapi:edit return="SAME_PAGE"}<br />
+&lt;p&gt;Login/email: &lt;input type="text" name="email" value="{email}" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;Password: &lt;input type="password" name="password" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;First name: &lt;input type="text" name="first_name" value="{first_name}" /&gt;&lt;/p&gt;<br />
+&lt;p&gt;Photo: &lt;input type="file" name="image" /&gt;&lt;/p&gt;<br />
+&lt;input type="submit" /&gt;<br />
+{/exp:summitapi:edit}
+</code>
+
+<p>Parameters:</p>
+<ul>
+<li><strong>return</strong> &mdash; a page to return after action (either successful or failed). Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display form.</li>
+<li><strong>id</strong> &mdash; form ID.</li>
+<li><strong>class</strong> &mdash; form CSS class.</li>
+<li><strong>name</strong> &mdash; form name.</li>
+<li><strong>ajax="yes"</strong> &mdash; "ajax" mode. Return success/error messages unformatted.</li>
+</ul>
+    
+    
+<p>Form fields:</p>
+<ul>
+<li><strong>email</strong></li>
+<li><strong>password</strong></li>
+<li><strong>first_name</strong></li>
+<li><strong>last_name</strong></li>
+<li><strong>description</strong></li>
+<li><strong>twitter_handle</strong></li>
+<li><strong>company_name</strong></li>
+<li><strong>address</strong></li>
+<li><strong>job_title</strong></li>
+<li><strong>phone_number</strong></li>
+<li><strong>city</strong></li>
+<li><strong>country</strong></li>
+<li><strong>gender</strong></li>
+<li><strong>interests</strong></li>
+<li><strong>functional_area</strong></li>
+<li><strong>functional_titles</strong></li>
+<li><strong>industry</strong></li>
+<li><strong>image</strong> &mdash; file input to select profile image</li>
+</ul> 
+
+
+
+<p>Variables:</p>
+<ul>
+<li>all variables available with {exp:summitapi:profile} tag</li>
+</ul> 
+
+
+
+
+	<h2><a name="profile"></a>View profile</h2>
+     
+    
+<code>
+{exp:summitapi:profile}<br />
+&lt;p&gt;Login/email: {email}&lt;/p&gt;
+&lt;p&gt;Full name: {full_name}&lt;/p&gt;
+{if medium_image}&lt;img src="{medium_image}" /&gt;{/if}
+{/exp:summitapi:profile}
+</code>
+
+<p>Parameters:</p>
+<ul>
+<li><strong>member_id</strong> &mdash; ID (in EE database) or member to display profile. Omit to use logged in user profile.</li>
+</ul>
+   
+
+<p>Variables:</p>
+<ul>
+<li><strong>id</strong></li>
+<li><strong>first_name</strong></li>
+<li><strong>last_name</strong></li>
+<li><strong>description</strong></li>
+<li><strong>email</strong></li>
+<li><strong>twitter_handle</strong></li>
+<li><strong>company_name</strong></li>
+<li><strong>address</strong></li>
+<li><strong>job_title</strong></li>
+<li><strong>phone_number</strong></li>
+<li><strong>city</strong></li>
+<li><strong>country</strong></li>
+<li><strong>gender</strong></li>
+<li><strong>interests</strong></li>
+<li><strong>full_name</strong></li>
+<li><strong>authentication_token</strong></li>
+<li><strong>functional_area</strong></li>
+<li><strong>functional_titles</strong></li>
+<li><strong>industry</strong></li>
+<li><strong>large_image</strong></li>
+<li><strong>medium_image</strong></li>
+<li><strong>thumb_image</strong></li>
+</ul> 
+
+
+
+
+
+</div>
+
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2014 Yuri Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>

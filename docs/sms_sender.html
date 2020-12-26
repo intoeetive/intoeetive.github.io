@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>SMS Sender</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="navlinks">
+<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
+<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
+<a href="http://www.intoeetive.com/index.php/comments/sms-sender">SMS Sender</a>
+</div>
+
+
+<div id="content">
+
+	<h1>SMS Sender</h1>
+
+	<p>This module enables sending SMS from ExpressionEngine frontend pages.</p>
+    
+    <p>To send SMS, you will need to use third-party SMS gateway service. Currently following are supported: <a href="http://www.twilio.com/">Twilio</a>.</p>
+
+
+	
+	<h2>Sending the message</h2>
+
+	<p><strong>{exp:sms_sender:form}</strong></p>
+
+<code>
+{exp:sms_sender:form}<br />
+&lt;p&gt;Message:<br />
+&lt;textarea name="message"&gt;&lt;/textarea&gt;<br />
+&lt;/p&gt;<br />
+&lt;p&gt;Recipients:<br />
+&lt;textarea name="recipients"&gt;&lt;/textarea&gt;<br />
+&lt;/p&gt;<br />
+&lt;p&gt;&lt;input type="submit" value="Send SMS" /&gt;&lt;/p&gt;<br />
+{/exp:sms_sender:form}
+</code> 
+
+<p><strong>Tag parameters:</strong>
+<ul>
+<li><dfn>return</dfn> &mdash; a page to return to after submitting the form. Can be a full URL or URI segments.<br />Use <em>return="SAME_PAGE"</em> to return user to the page used to display this form.</li>
+<li><dfn>skip_success_message="yes"</dfn> &mdash; force redirect to return page without showing success message.</li>
+<li><dfn>ajax="yes"</dfn> &mdash; turn on AJAX mode. The success or error messages shown upon submission will be shown as simple text, without using message templates. The "return" parameter will not be functional if you supply this parameter.</li>
+<li><dfn>id</dfn> &mdash; form ID (defaults to 'sms_sender_form')</li>
+<li><dfn>class</dfn> &mdash; form class (defaults to 'sms_sender_form')</li>
+<li><dfn>name</dfn> &mdash; form name (defaults to 'sms_sender_form')</li>
+</ul>
+</p>
+
+<p><strong>Form fields</strong>:
+<ul>
+<li><dfn>message</dfn> &mdash; SMS message text</li>
+<li><dfn>recipients</dfn> &mdash; list of recipients phones (in internation format). Put each number on new line, or separate with comma</li>
+</ul>
+</p>
+
+
+	<h2>Log of sent messages</h2>
+
+<code>
+{exp:sms_sender:log member_data="yes" custom_fields="yes"}<br />
+{if count==1}		<br />
+&lt;div class="box2"&gt;<br />
+	&lt;div class="header"&gt;<br />
+		&lt;div class="t"&gt;<br />
+			&lt;h3&gt;MY BOOKMARKS&lt;/h3&gt;<br />
+		&lt;/div&gt;<br />
+	&lt;/div&gt;<br />
+	&lt;ul class="broadcasters"&gt;<br />
+{/if}		<br />
+		&lt;li&gt;<br />
+			&lt;a class="img" href="{path=entry/{url_title}}"&gt;&lt;img src="{photo_url}" alt="{title}" /&gt;&lt;/a&gt;<br />
+			&lt;div class="text"&gt;<br />
+				&lt;a href="{path=entry/{url_title}}"&gt;{title}&lt;/a&gt;<br />
+				{if description}&lt;p&gt;{description}&lt;/p&gt;{/if}}<br />
+			&lt;/div&gt;<br />
+		&lt;/li&gt;<br />
+{if count==total_results}<br />
+	&lt;/ul&gt;<br />
+&lt;/div&gt;<br />
+{/if}<br />
+{/exp:bookmarks:entries}<br />
+</code>
+
+<p><strong>{exp:bookmarks:entries}</strong> tag will display all channel entries bookmarked by user.</p>
+
+<p><strong>Tag parameters (all optional):</strong>
+<ul>
+<li><dfn>member_id</dfn> &mdash; ID of member to fetch bookmarks. Defaults to logged in user</li>
+<li><dfn>username</dfn> &mdash; alternatively, you can specify username istead of member_id</li>
+<li><dfn>group_id</dfn> &mdash; set this parameter to Channel ID if you want to restrict output to entries from certain channel</li>
+<li><dfn>site_id</dfn> &mdash; you can restrict output to certain site. Defaults to current site. Separate multiple site_id's with a pipe |</li>
+<li><dfn>custom_fields="yes"</dfn> &mdash; if set to "yes", will also parse custom fields data for bookmarked entries</li>
+<li><dfn>member_data="yes"</dfn> &mdash; if set to "yes", will also parse entry author's data</li>
+<li><dfn>prefix</dfn> &mdash; optional prefix for variables. Ex. if you set prefix="bookmark" you'll be able to use {bookmark:title} instead of {title} </li>
+<li><dfn>sort</dfn> &mdash; sorting order. Possible values are 'asc', 'desc' (default) and 'random'</li>
+<li><dfn>return_ids_string</dfn> &mdash; return ONLY pipe-separated string ot entry_ids (1|7|15|26) as <dfn>{ids_string}</dfn> variable</li>
+</ul>
+</p>
+
+<p><strong>Single variables:</strong>
+<ul>
+<li><dfn>remove_url</dfn> &mdash; URL that user can click to remove entry from bookmarks</li>
+<li><dfn>bookmark_date format="%Y-%m-%d"</dfn> &mdash; the date when entry was favorited</li>
+<li><dfn>entry_id</dfn></li>
+<li><dfn>title</dfn></li>
+<li><dfn>url_title</dfn></li>
+<li><dfn>entry_date</dfn></li>
+<li>and other standard entry fields</li>
+</ul>
+</p>
+
+<p>Additionally, if you have custom_fields="yes" set then all custom entry fields are parsed.</p>
+
+<p>If you have member_data="yes" set then entry author's standard member profile fields are also parsed.</p>
+
+
+
+
+
+
+</div>
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2013 Yuri Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>

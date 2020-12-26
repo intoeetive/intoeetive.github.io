@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Buddies for ExpressionEngine 1.x</title>
+
+  <style type="text/css" media="screen,print">@import url("docs.css");</style>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"></head>
+
+<body>
+<div><a name="top"></a></div>
+
+<div id="header">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr>
+<td class="docheading" style="width:300px;"><h1 style="font-size: 18px; font-weight: bold;">intoEEtive.com</h1></td>
+<td class="searchbox">
+
+</td>
+</tr>
+</table>
+</div>
+
+
+<div id="navlinks">
+<a href="http://www.intoeetive.com/">intoEEtive.com</a> &gt;
+<a href="http://www.intoeetive.com/index.php/category/extending_ee">EE add-ons</a> &gt;
+<a href="http://www.intoeetive.com/index.php/comments/buddies-are-now-a-module-add-social-network-features-to-your-site-easily">Buddies module</a>
+</div>
+
+
+<div id="content">
+
+	<h1>Buddies</h1>
+
+	<p>This module enables users to have buddies/friends/followers just like in many popular social networks and blogging systems.</p>
+    <p>The users are able to add/remove others as their friends. The lists of friends added by user and also who added him can be displayed.</p>
+    <p>Also, you can have “enemies” along with friends - for fun or for something useful.</p>
+<p>The module is using standard database table, so it’s 100% compatible with Buddies/Blocked list that can be found under Personal messages in user’s Control Panel.</p>
+    <!--<p class="important"></p>-->
+
+
+	<h2>Tags</h2>
+
+	<ul>
+		
+        
+        <li><a href="#add">add</a> - add buddy (follow someone)</li>
+        <li><a href="#remove">remove</a> - remove buddy (stop following)</li>
+        <li><a href="#check">check</a> - check whether user A has added as a buddy (or following) user B</li>
+        <li><a href="#check_reverse">check_reverse</a> - check whether user A has been added as a buddy (or followed) by user B</li>
+		<li><a href="#total">total</a> - total buddies added by user A (following him)</li>
+        <li><a href="#total_reverse">total_reverse</a> - total members who added user A as buddy (his followers)</li>
+        <li><a href="#display">display</a> - display all buddies added by user A (followed by him)</li>
+        <li><a href="#display_reverse">display_reverse</a> - display all members who added user A as buddy (his followers)</li>
+	</ul>
+
+
+	<h2><a name="add"></a>{exp:buddies:add}</h2>
+
+<code>{exp:buddies:add subject_id="{segment_3}" object_id="{segment_4}" type="buddy" report="full"}</code>
+Add a member as buddy of another member (follow someone).<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who wants to add a buddy (follow someone). Can use {logged_in_member_id}.<br />
+<strong>object_id</strong> (required) - member_id of the user to be added as buddy (followed). Can use {logged_in_member_id}.<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>return_type</strong> (optional) - type of message returned when add is complete. Can be <em>string</em> (default) or <em>bool</em> (true or false). This parameter has power only if 'report' is set to 'short'<br />
+<strong>report</strong> (optional) - defines the way to show success or error messages. Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+
+	<h2><a name="remove"></a>{exp:buddies:remove}</h2>
+
+<code>{exp:buddies:remove subject_id="{segment_3}" object_id="{segment_4}" type="buddy" report="full"}</code>
+Remove a member from buddies of another member (stop following).<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who wants to remove a buddy (stop following someone). Can use {logged_in_member_id}.<br />
+<strong>object_id</strong> (required) - member_id of the user to be remove as buddy (unfollowed). Can use {logged_in_member_id}.<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>return_type</strong> (optional) - type of message returned when add is complete. Can be <em>string</em> (default) or <em>bool</em> (true or false). This parameter has power only if 'report' is set to 'short'<br />
+<strong>report</strong> (optional) - defines the way to show success or error messages. Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+
+
+	<h2><a name="check"></a>{exp:buddies:check}</h2>
+
+<code>{exp:buddies:check subject_id="{segment_3}" object_id="{segment_4}"}<br />
+Member {segment_3} is not following {segment_4}<br />
+{if no_results}<br />
+Member {segment_3} is following {segment_4}<br />
+{/if}<br />
+{/exp:buddies:check}</code>
+Check whether check whether user subject_id has added as a buddy (or following) user object_id.<br />
+Does not return any variables, but the code inside is displayed only if the object member IS NOT buddy of subject.<br /><br />
+<strong>subject_id</strong> (required) - 'active' member_id (who acted). Can use {logged_in_member_id}.<br />
+<strong>object_id</strong> (required) - 'passive' member_id (on whom was action). Can use {logged_in_member_id}.<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead
+
+	<h2><a name="check_reverse"></a>{exp:buddies:check_reverse}</h2>
+
+<code>{exp:buddies:check_reverse subject_id="{segment_3}" object_id="{segment_4}"}<br />
+Member {segment_3} is not followed by {segment_4}<br />
+{if no_results}<br />
+Member {segment_3} followed by {segment_4}<br />
+{/if}<br />
+{/exp:buddies:check}</code>
+Check whether check whether user subject_id has been added as a buddy (or followed) by user object_id.<br />
+Does not return any variables, but the code inside is displayed only if the subject member IS NOT buddy of object.<br /><br />
+<strong>subject_id</strong> (required) - 'active' member_id (who acted). Can use {logged_in_member_id}.<br />
+<strong>object_id</strong> (required) - 'passive' member_id (on whom was action). Can use {logged_in_member_id}.<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead
+
+
+	<h2><a name="total"></a>{exp:buddies:total}</h2>
+
+<code>{exp:buddies:total subject_id="{segment_3}" type="buddy" report="full"}</code>
+Show total number of buddies added by user (that he's following)<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who has budies<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>report</strong> (optional) - defines the way to show error messages (applies to errors only). Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+<p><strong><ins>Variables returned:</ins></strong><br />
+<strong>{count}</strong> - number of buddies/followers<br />
+<strong>{buddy_count}</strong> - synonym for above
+</p>
+
+	<h2><a name="total_reverse"></a>{exp:buddies:total_reverse}</h2>
+
+<code>{exp:buddies:total_reverse subject_id="{segment_3}" type="buddy" report="full"}</code>
+Show total number of people who added user as buddy (followers)<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who has been added as buddy<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>report</strong> (optional) - defines the way to show error messages (applies to errors only). Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+<p><strong><ins>Variables returned:</ins></strong><br />
+<strong>{count}</strong> - number of buddies/followings<br />
+<strong>{buddy_count}</strong> - synonym for above
+</p>
+
+
+
+	<h2><a name="display"></a>{exp:buddies:display}</h2>
+
+<code>{exp:buddies:display subject_id="{segment_3}" limit="20" type="buddy" report="full"}<br />
+{username}<br />
+{screen_name}<br />
+{buddy_avatar_filename}<br />
+... any other member data<br />
+{/exp:buddies:display}</code>
+Display the list of buddies added by user (the ones he's following)<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who has budies<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>limit</strong> (optional) - Number of buddy members to display. Shows all by default. <br />
+<strong>report</strong> (optional) - defines the way to show error messages (applies to errors only). Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+<p><strong>Variables returned:</strong><br />
+All standard and custom member profile fields <br />
+<strong>Alternative syntax</strong> - all standard and custom member profile fields prefixed with <strong>buddy_</strong> ({buddy_member_id}, {buddy_custom_field_name} etc.)
+</p>
+
+
+	<h2><a name="display"></a>{exp:buddies:display_reverse}</h2>
+
+<code>{exp:buddies:display_reverse subject_id="{segment_3}" limit="20" type="buddy" report="full"}<br />
+{username}<br />
+{screen_name}<br />
+{buddy_avatar_filename}<br />
+... any other member data<br />
+{/exp:buddies:display_reverse}</code>
+Display the list of  members who added user as buddy (his followers)<br /><br />
+<strong>subject_id</strong> (required) - member_id of user who has budies<br />
+<strong>type</strong> (optional) - Defaults to ‘buddy’ but you can set it to ‘blocked’ to work with blocked members instead<br />
+<strong>limit</strong> (optional) - Number of buddy members to display. Shows all by default. <br />
+<strong>report</strong> (optional) - defines the way to show error messages (applies to errors only). Possible values: <em>full</em>(using system message template), <em>short</em> (display only message text) or <em>off</em> (no message shown)
+<p><strong><ins>Variables returned:</ins></strong><br />
+All standard and custom member profile fields <br />
+<strong>Alternative syntax</strong> - all standard and custom member profile fields prefixed with <strong>buddy_</strong> ({buddy_member_id}, {buddy_custom_field_name} etc.)
+</p>
+
+
+
+	<h2>Changelog</h2>
+
+	<ul>
+    <li>v 0.7 (2010-10-26) - initial release as a module</li>
+    </ul>
+
+
+
+
+
+</div>
+
+
+<p class="center"><a href="#top">Top of page</a></p>
+
+<!-- {user_guide_comments} -->
+
+<div id="footer">
+  <address>Copyright &copy; 2010 Yuriy Salimovskiy <a href="http://www.intoeetive.com/">intoEEtive.com</a></address>
+</div>
+
+</body>
+</html>
